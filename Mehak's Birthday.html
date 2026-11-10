@@ -1,0 +1,438 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Mehak's Birthday</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;1,9..144,300;1,9..144,400&family=Great+Vibes&family=DM+Sans:wght@400;500&display=swap">
+<style>
+/* Layout: one centred column in a dark plum room. Name on top, the cake lit only by its own candles, a short caption and a 3 second timer below. */
+:root{
+  --night:#12091a;
+  --plum:#24112e;
+  --flame:#ffb347;
+  --rose:#ff8fab;
+  --cream:#fff0e2;
+  --muted:#cdb6cc;
+  --f-display:'Fraunces',Georgia,serif;
+  --f-script:'Great Vibes','Snell Roundhand',cursive;
+  --f-body:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{background:var(--night)}
+body{
+  margin:0;
+  min-height:100vh;
+  min-height:100svh;
+  background:radial-gradient(120% 70% at 50% 0%,#33173f 0%,rgba(51,23,63,0) 60%),var(--night);
+  color:var(--cream);
+  font-family:var(--f-body);
+  font-size:16px;
+  padding-block:24px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow-x:hidden;
+  position:relative;
+}
+.sky{position:fixed;inset:0;pointer-events:none;z-index:0}
+.sky i{position:absolute;border-radius:50%;background:#fff3e0;opacity:.1;animation:tw 4s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.08}50%{opacity:.65}}
+.aura{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(60% 46% at 50% 54%,rgba(255,176,80,.30),rgba(255,120,60,.08) 55%,rgba(255,120,60,0) 78%);
+  opacity:1;transition:opacity 1.4s ease;
+}
+body.out .aura{opacity:.1}
+
+.stage{position:relative;z-index:1;width:100%;max-width:520px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px}
+h1{margin:0;display:flex;flex-direction:column;align-items:center;font-weight:400}
+.hb{font-family:var(--f-display);font-style:italic;font-weight:300;font-size:clamp(1.35rem,5.2vw,2rem);letter-spacing:.02em;color:var(--cream)}
+.name{
+  font-family:var(--f-script);font-size:clamp(4.2rem,20vw,7.6rem);line-height:1.02;padding:0 .12em .06em;
+  color:#ffc0a4;
+  background:linear-gradient(100deg,#ffe0b5 0%,#ffa9b8 55%,#ff8fab 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.cake-wrap{width:min(100%,460px);margin-top:2px}
+#cake{display:block;width:100%;height:auto;overflow:visible;transition:filter 1.4s ease}
+body.out #cake{filter:brightness(.72) saturate(.92)}
+
+.status{display:flex;flex-direction:column;align-items:center;gap:12px;min-height:96px;margin-top:4px}
+.caption{margin:0;font-size:1.02rem;color:var(--muted);letter-spacing:.01em}
+.caption.in{animation:fadeUp .6s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.bar{width:150px;height:3px;border-radius:2px;background:rgba(255,255,255,.12);overflow:hidden;transition:opacity .8s ease}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--flame),var(--rose));transform-origin:left;transform:scaleX(0)}
+@keyframes fill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+body.out .bar{opacity:0}
+.again,.close{
+  font-family:var(--f-body);font-size:.95rem;font-weight:500;color:var(--cream);cursor:pointer;
+  background:transparent;border:1px solid rgba(255,196,140,.45);border-radius:999px;padding:.65rem 1.25rem;
+  transition:background .2s ease,border-color .2s ease;
+}
+.again:hover,.close:hover{background:rgba(255,196,140,.14);border-color:rgba(255,196,140,.75)}
+.again:focus-visible,.close:focus-visible{outline:2px solid var(--flame);outline-offset:3px}
+
+/* candles */
+.flame{transform-box:fill-box;transform-origin:50% 100%;animation:flicker 1.3s ease-in-out infinite;animation-delay:calc(var(--i) * -.37s)}
+@keyframes flicker{
+  0%,100%{transform:scale(1,1) skewX(0)}
+  18%{transform:scale(.95,1.07) skewX(-2deg)}
+  37%{transform:scale(1.05,.95) skewX(2.5deg)}
+  58%{transform:scale(.97,1.09) skewX(-1deg)}
+  79%{transform:scale(1.03,.98) skewX(1.5deg)}
+}
+.halo{animation:halo 1.7s ease-in-out infinite;animation-delay:calc(var(--i) * -.5s)}
+@keyframes halo{0%,100%{opacity:1}50%{opacity:.78}}
+body.out .flame{animation:blow .6s ease-in forwards;animation-delay:calc(var(--i) * .12s)}
+@keyframes blow{
+  0%{transform:scale(1,1) skewX(0);opacity:1}
+  30%{transform:scale(.9,.75) skewX(-26deg) translateX(2px);opacity:1}
+  100%{transform:scale(.25,.1) skewX(-55deg) translateX(8px);opacity:0}
+}
+body.out .halo{animation:haloOut .9s ease-out forwards;animation-delay:calc(var(--i) * .12s)}
+@keyframes haloOut{from{opacity:.9}to{opacity:0}}
+.ember{opacity:0}
+body.out .ember{animation:ember 1.8s .1s ease-out forwards}
+@keyframes ember{0%{opacity:1}60%{opacity:.8}100%{opacity:0}}
+.smoke{fill:none;stroke:#d9d0e2;stroke-width:2.4;stroke-linecap:round;opacity:0;transform-box:fill-box;transform-origin:50% 100%}
+body.out .smoke{animation:smoke 2.8s ease-out forwards;animation-delay:calc(.25s + var(--i) * .12s)}
+@keyframes smoke{
+  0%{opacity:0;transform:translate(0,0) scale(.5,.5)}
+  12%{opacity:.6}
+  100%{opacity:0;transform:translate(8px,-46px) scale(1.5,1.9)}
+}
+
+/* pop-up */
+.pop{
+  position:fixed;inset:0;z-index:20;display:grid;place-items:center;overflow-y:auto;
+  padding-top:max(16px,env(safe-area-inset-top,0px));
+  padding-bottom:max(16px,env(safe-area-inset-bottom,0px));
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  background:rgba(10,4,16,.62);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  opacity:0;transition:opacity .35s ease;
+}
+.pop.show{opacity:1}
+.card{
+  width:min(100%,470px);text-align:center;
+  background:linear-gradient(160deg,#381c47 0%,#1f0f29 100%);
+  border:1px solid rgba(255,196,140,.28);border-radius:22px;
+  padding:30px 26px 26px;
+  box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 70px rgba(255,160,90,.14);
+  transform:scale(.6) translateY(30px);opacity:0;
+  transition:transform .6s cubic-bezier(.34,1.56,.64,1),opacity .3s ease;
+}
+.pop.show .card{transform:none;opacity:1}
+.kicker{margin:0;font-size:.74rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--flame)}
+.card h2{margin:10px 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(1.5rem,6vw,1.9rem);line-height:1.2;text-wrap:balance;color:var(--cream)}
+.rule{width:64px;height:1px;margin:16px auto;background:linear-gradient(90deg,rgba(255,179,71,0),var(--flame),rgba(255,179,71,0))}
+.msg{margin:0 0 12px;font-family:var(--f-display);font-weight:300;font-size:1.06rem;line-height:1.75;color:#f6e4d6;text-wrap:pretty}
+.sign{margin:6px 0 20px;font-family:var(--f-script);font-size:clamp(2rem,8vw,2.6rem);line-height:1.1;color:#ffb4c2}
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:30}
+
+@media (prefers-reduced-motion:reduce){
+  .flame,.halo,.sky i{animation:none}
+  body.out .flame{animation:none;opacity:0}
+  body.out .halo{animation:none;opacity:0}
+  body.out .smoke{animation:none;opacity:0}
+  .card{transition:opacity .3s ease;transform:none}
+  .caption.in{animation:none}
+}
+</style>
+
+<div class="sky" id="sky" aria-hidden="true"></div>
+<div class="aura" aria-hidden="true"></div>
+
+<main class="stage">
+  <h1><span class="hb">Happy Birthday</span><span class="name">Mehak</span></h1>
+
+  <div class="cake-wrap">
+    <svg id="cake" viewBox="0 70 400 285" role="img" aria-label="Candles wala birthday cake jis par Mehak likha hai">
+      <defs>
+        <linearGradient id="plate" x1="0" x2="1"><stop offset="0" stop-color="#cfc8d6"/><stop offset=".5" stop-color="#fbf8ff"/><stop offset="1" stop-color="#b9b1c4"/></linearGradient>
+        <linearGradient id="cream" x1="0" x2="1"><stop offset="0" stop-color="#e9798f"/><stop offset=".35" stop-color="#ffb3c4"/><stop offset=".62" stop-color="#ffc4d1"/><stop offset="1" stop-color="#d4607a"/></linearGradient>
+        <linearGradient id="shade" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".38"/><stop offset=".22" stop-color="#000" stop-opacity="0"/><stop offset=".72" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".45"/></linearGradient>
+        <linearGradient id="hl" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".28"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+        <linearGradient id="choc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6a3320"/><stop offset="1" stop-color="#3a1b10"/></linearGradient>
+        <radialGradient id="chocTop" cx=".45" cy=".35" r=".8"><stop offset="0" stop-color="#7a3d27"/><stop offset="1" stop-color="#3b1c11"/></radialGradient>
+        <radialGradient id="pearl" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#f2b7c6"/></radialGradient>
+        <radialGradient id="berry" cx=".4" cy=".3" r=".85"><stop offset="0" stop-color="#ff7a86"/><stop offset=".55" stop-color="#d81d3a"/><stop offset="1" stop-color="#8e0f26"/></radialGradient>
+        <linearGradient id="candleShade" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".25"/><stop offset=".35" stop-color="#fff" stop-opacity=".35"/><stop offset=".7" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".3"/></linearGradient>
+        <pattern id="stripes" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-40)"><rect width="8" height="8" fill="#fff6f8"/><rect width="4" height="8" fill="#ff7fa0"/></pattern>
+        <linearGradient id="flameG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8a1f" stop-opacity=".7"/><stop offset=".5" stop-color="#ffc24a"/><stop offset="1" stop-color="#fff2b0"/></linearGradient>
+        <radialGradient id="glow"><stop offset="0" stop-color="#ffc067" stop-opacity=".75"/><stop offset=".4" stop-color="#ff9a40" stop-opacity=".25"/><stop offset="1" stop-color="#ff8a30" stop-opacity="0"/></radialGradient>
+        <radialGradient id="shadowG"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+        <radialGradient id="topLight"><stop offset="0" stop-color="#ffb060" stop-opacity=".5"/><stop offset="1" stop-color="#ff9040" stop-opacity="0"/></radialGradient>
+        <linearGradient id="sideLight" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffaa50" stop-opacity=".38"/><stop offset=".6" stop-color="#ff8c3c" stop-opacity=".08"/><stop offset="1" stop-color="#ff8c3c" stop-opacity="0"/></linearGradient>
+        <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .1  0 0 0 0 .15  0 0 0 1.6 -.55"/></filter>
+        <filter id="blur2" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.6"/></filter>
+        <filter id="blur1" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation=".7"/></filter>
+        <clipPath id="sideClip"><path d="M80,190 L80,290 A120,30 0 0 0 320,290 L320,190 Z"/></clipPath>
+        <path id="txtArc" d="M100,262.6 A120,30 0 0 0 300,262.6" fill="none"/>
+      </defs>
+
+      <!-- plate -->
+      <ellipse cx="200" cy="318" rx="190" ry="34" fill="url(#shadowG)"/>
+      <ellipse cx="200" cy="296" rx="182" ry="40" fill="url(#plate)"/>
+      <ellipse cx="200" cy="294" rx="160" ry="34" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.2"/>
+      <ellipse cx="200" cy="294" rx="140" ry="29" fill="#e9e3f0" opacity=".35"/>
+      <ellipse cx="206" cy="306" rx="128" ry="30" fill="#000" opacity=".28" filter="url(#blur2)"/>
+
+      <!-- cake side -->
+      <path d="M80,190 L80,290 A120,30 0 0 0 320,290 L320,190 Z" fill="url(#cream)"/>
+      <g clip-path="url(#sideClip)">
+        <g fill="none" stroke-linecap="round">
+          <path d="M80,224 A120,30 0 0 0 320,224" stroke="#fff" stroke-opacity=".16" stroke-width="3"/>
+          <path d="M80,227.5 A120,30 0 0 0 320,227.5" stroke="#b83e5c" stroke-opacity=".16" stroke-width="2"/>
+          <path d="M80,248 A120,30 0 0 0 320,248" stroke="#fff" stroke-opacity=".14" stroke-width="3"/>
+          <path d="M80,251.5 A120,30 0 0 0 320,251.5" stroke="#b83e5c" stroke-opacity=".14" stroke-width="2"/>
+          <path d="M80,272 A120,30 0 0 0 320,272" stroke="#fff" stroke-opacity=".12" stroke-width="3"/>
+          <path d="M80,275.5 A120,30 0 0 0 320,275.5" stroke="#b83e5c" stroke-opacity=".12" stroke-width="2"/>
+        </g>
+        <path d="M80,190 L80,290 A120,30 0 0 0 320,290 L320,190 Z" fill="url(#shade)"/>
+        <rect x="118" y="200" width="46" height="130" fill="url(#hl)"/>
+        <rect x="80" y="190" width="240" height="130" filter="url(#grain)" opacity=".5"/>
+      </g>
+
+      <!-- name piped on the cake -->
+      <text class="script" font-size="40" text-anchor="middle" fill="#a63a58" opacity=".5" transform="translate(.8,1.4)" style="font-family:var(--f-script)"><textPath href="#txtArc" startOffset="50%">Mehak</textPath></text>
+      <text class="script" font-size="40" text-anchor="middle" fill="#fff" style="font-family:var(--f-script)"><textPath href="#txtArc" startOffset="50%">Mehak</textPath></text>
+
+      <g id="drips"></g>
+      <g id="pearls"></g>
+
+      <!-- top -->
+      <ellipse cx="200" cy="190" rx="120" ry="30" fill="url(#chocTop)"/>
+      <ellipse cx="200" cy="190" rx="120" ry="30" fill="none" stroke="#a45a3a" stroke-opacity=".5" stroke-width="1.2"/>
+      <ellipse cx="170" cy="184" rx="52" ry="9" fill="#fff" opacity=".1"/>
+      <g id="rosettes"></g>
+      <g id="candles"></g>
+      <g id="berries"></g>
+
+      <!-- candle light on the cake -->
+      <path d="M80,190 L80,290 A120,30 0 0 0 320,290 L320,190 Z" fill="url(#sideLight)" class="halo" style="--i:1;mix-blend-mode:screen"/>
+      <ellipse cx="200" cy="190" rx="120" ry="30" fill="url(#topLight)" class="halo" style="--i:2;mix-blend-mode:screen"/>
+
+      <g id="flames"></g>
+      <g id="smokes"></g>
+    </svg>
+  </div>
+
+  <div class="status">
+    <p id="caption" class="caption in" aria-live="polite">Ek wish maang lo...</p>
+    <div class="bar" id="bar" aria-hidden="true"><i id="fill"></i></div>
+    <button id="again" class="again" type="button" hidden>Candles phir se jalao</button>
+  </div>
+</main>
+
+<div class="pop" id="pop" role="dialog" aria-modal="true" aria-labelledby="popTitle" hidden>
+  <div class="card">
+    <p class="kicker">Mehak ke liye</p>
+    <h2 id="popTitle">Aaj ka din sirf tumhara hai</h2>
+    <div class="rule" aria-hidden="true"></div>
+    <p class="msg">Mehak, aaj ka din tumhare hone ka jashn hai. Jaise tumhara naam har jagah apni khushboo chhod jaata hai, waise hi tum jis kisi ki zindagi mein ho, use apni muskaan aur apne apnepan se mehka deti ho.</p>
+    <p class="msg">Ye naya saal tumhare liye wahi sab laaye jo tumne dil se chaha hai. Sukoon, bepanah hansi, bharose ke log, aur woh sapne jo ab sach hone ko betaab hain. Abhi jo wish maangi hai, wo poori ho, bas yahi dua hai.</p>
+    <p class="sign">Janamdin bahut bahut mubarak ho!</p>
+    <button id="close" class="close" type="button">Shukriya</button>
+  </div>
+</div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<script>
+(function(){
+  var NS='http://www.w3.org/2000/svg';
+  function $(id){return document.getElementById(id);}
+  function el(tag,attrs,parent){
+    var n=document.createElementNS(NS,tag);
+    for(var k in attrs){n.setAttribute(k,attrs[k]);}
+    if(parent){parent.appendChild(n);}
+    return n;
+  }
+  function rimY(x){return 190+30*Math.sqrt(Math.max(0,1-Math.pow((x-200)/120,2)));}
+
+  /* chocolate drips along the front rim */
+  (function(){
+    var g=$('drips');
+    var list=[[96,6,14],[122,5,20],[150,6,10],[176,5,22],[205,6,14],[232,5,20],[260,6,10],[286,5,16],[306,5,8]];
+    function len(x){
+      var v=8+2*Math.sin(x/9);
+      for(var i=0;i<list.length;i++){
+        var t=(x-list[i][0])/list[i][1];
+        if(Math.abs(t)<1){v+=list[i][2]*Math.sqrt(1-t*t);}
+      }
+      return v;
+    }
+    var d='',x;
+    for(x=80;x<=320;x+=2){d+=(x===80?'M':'L')+x+','+(rimY(x)-3).toFixed(1);}
+    for(x=320;x>=80;x-=2){d+='L'+x+','+(rimY(x)+len(x)).toFixed(1);}
+    d+='Z';
+    el('path',{d:d,fill:'url(#choc)',stroke:'#3a1b10','stroke-width':1,'stroke-linejoin':'round'},g);
+    list.forEach(function(p){
+      el('ellipse',{cx:p[0]-p[1]*.35,cy:rimY(p[0])+8+p[2]*.3,rx:1.2,ry:2+p[2]*.35,fill:'#fff',opacity:.2},g);
+    });
+  })();
+
+  /* piped pearl border at the base */
+  (function(){
+    var g=$('pearls'),i,a;
+    for(i=0;i<=22;i++){
+      a=Math.PI*i/22;
+      el('circle',{cx:(200+116*Math.cos(a)).toFixed(1),cy:(290+27*Math.sin(a)).toFixed(1),r:7.2,fill:'url(#pearl)'},g);
+    }
+  })();
+
+  /* cream rosettes on the back half of the top */
+  (function(){
+    var g=$('rosettes'),a,x,y,r;
+    for(a=190;a<=350;a+=20){
+      r=a*Math.PI/180;
+      x=200+106*Math.cos(r);y=190+25*Math.sin(r);
+      var q=el('g',{transform:'translate('+x.toFixed(1)+','+y.toFixed(1)+')'},g);
+      el('ellipse',{cx:0,cy:4,rx:8,ry:2.6,fill:'#000',opacity:.25},q);
+      el('circle',{r:7.2,fill:'url(#pearl)'},q);
+      el('circle',{r:4.6,fill:'none',stroke:'#f0a3b8','stroke-width':.9},q);
+      el('circle',{r:2,fill:'#f7bccb'},q);
+    }
+  })();
+
+  /* candles, flames, smoke */
+  var candles=[{x:200,y:180,h:58},{x:158,y:186,h:52},{x:242,y:186,h:52}];
+  var cLayer=$('candles'),fLayer=$('flames'),sLayer=$('smokes');
+  candles.forEach(function(c,i){
+    var x=c.x,y=c.y,top=y-c.h;
+    var g=el('g',{},cLayer);
+    el('ellipse',{cx:x,cy:y,rx:7.5,ry:2.6,fill:'#e07a95',opacity:.7},g);
+    el('ellipse',{cx:x,cy:y,rx:5.5,ry:2,fill:'#ffb6c8'},g);
+    el('rect',{x:x-5.5,y:top,width:11,height:c.h,fill:'url(#stripes)'},g);
+    el('rect',{x:x-5.5,y:top,width:11,height:c.h,fill:'url(#candleShade)'},g);
+    el('ellipse',{cx:x,cy:y,rx:5.5,ry:2,fill:'url(#stripes)'},g);
+    el('ellipse',{cx:x,cy:top,rx:5.5,ry:2,fill:'#fff3f5'},g);
+    el('ellipse',{cx:x,cy:top,rx:2.6,ry:.9,fill:'#e7a3b6'},g);
+    el('line',{x1:x,y1:top,x2:x+.6,y2:top-7,stroke:'#2a1a1a','stroke-width':1.3,'stroke-linecap':'round'},g);
+
+    var fg=el('g',{transform:'translate('+(x+.6)+','+(top-6.5)+')',style:'--i:'+i},fLayer);
+    el('circle',{cx:0,cy:-14,r:40,fill:'url(#glow)',class:'halo',style:'mix-blend-mode:screen'},fg);
+    var fl=el('g',{class:'flame'},fg);
+    el('path',{d:'M0,-28 C6,-18 8.5,-8 0,1.5 C-8.5,-8 -6,-18 0,-28Z',fill:'url(#flameG)'},fl);
+    el('path',{d:'M0,-17 C3.5,-11 4.5,-5 0,0 C-4.5,-5 -3.5,-11 0,-17Z',fill:'#fffbe6',opacity:.85},fl);
+    el('ellipse',{cx:0,cy:-1.5,rx:2.4,ry:3.2,fill:'#7fa8ff',opacity:.55,filter:'url(#blur1)'},fl);
+    el('circle',{cx:0,cy:1.5,r:1.8,fill:'#ff5a1f',class:'ember'},fg);
+
+    var sg=el('g',{transform:'translate('+(x+.6)+','+(top-8)+')',style:'--i:'+i},sLayer);
+    el('path',{d:'M0,0 C-5,-8 5,-14 0,-22 C-5,-30 4,-36 -1,-44',class:'smoke',filter:'url(#blur2)'},sg);
+  });
+
+  /* strawberries on the front of the top */
+  (function(){
+    var g=$('berries');
+    [[30,-8],[75,6],[105,-5],[150,9]].forEach(function(p){
+      var r=p[0]*Math.PI/180;
+      var x=200+104*Math.cos(r),y=190+24*Math.sin(r);
+      var b=el('g',{transform:'translate('+x.toFixed(1)+','+y.toFixed(1)+') rotate('+p[1]+') scale(1.1)'},g);
+      el('ellipse',{cx:0,cy:10,rx:9,ry:3,fill:'#000',opacity:.3},b);
+      el('path',{d:'M0,12 C-9,6 -13,-4 -9,-9 C-5,-13 5,-13 9,-9 C13,-4 9,6 0,12 Z',fill:'url(#berry)'},b);
+      [[-4,-2],[3,-3],[0,2],[-6,-6],[6,-7],[-2,6],[5,3]].forEach(function(s){
+        el('ellipse',{cx:s[0],cy:s[1],rx:.8,ry:1.3,fill:'#ffe9a8',opacity:.9},b);
+      });
+      el('ellipse',{cx:-4.5,cy:-4.5,rx:1.8,ry:3.2,fill:'#fff',opacity:.4,transform:'rotate(20 -4.5 -4.5)'},b);
+      el('path',{d:'M-7,-10 L-3,-7.5 L0,-13.5 L3,-7.5 L7,-10 L4,-5.5 L-4,-5.5Z',fill:'#3f9d4a',stroke:'#2a7436','stroke-width':.6},b);
+    });
+  })();
+
+  /* twinkling stars */
+  (function(){
+    var s=$('sky'),i,n;
+    for(i=0;i<36;i++){
+      n=document.createElement('i');
+      var sz=1+Math.random()*2;
+      n.style.left=(Math.random()*100)+'%';
+      n.style.top=(Math.random()*100)+'%';
+      n.style.width=n.style.height=sz+'px';
+      n.style.animationDelay=(-Math.random()*4)+'s';
+      n.style.animationDuration=(3+Math.random()*3)+'s';
+      s.appendChild(n);
+    }
+  })();
+
+  /* sequence: candles lit, 3 seconds, blow out, pop-up */
+  var DURATION=3000;
+  var caption=$('caption'),again=$('again'),fill=$('fill'),pop=$('pop'),closeBtn=$('close');
+  var timers=[];
+  function later(fn,ms){timers.push(setTimeout(fn,ms));}
+  function clearTimers(){timers.forEach(clearTimeout);timers=[];}
+  function say(t){
+    caption.classList.remove('in');
+    void caption.offsetWidth;
+    caption.textContent=t;
+    caption.classList.add('in');
+  }
+  function lit(){
+    clearTimers();
+    document.body.classList.remove('out');
+    again.hidden=true;
+    say('Ek wish maang lo...');
+    fill.style.animation='none';
+    void fill.offsetWidth;
+    fill.style.animation='fill '+(DURATION/1000)+'s linear forwards';
+    later(blow,DURATION);
+  }
+  function blow(){
+    document.body.classList.add('out');
+    say('Wish ho gayi. Ab dekho kya aaya hai...');
+    later(openPop,1500);
+  }
+  function openPop(){
+    pop.hidden=false;
+    requestAnimationFrame(function(){requestAnimationFrame(function(){pop.classList.add('show');});});
+    closeBtn.focus({preventScroll:true});
+    confetti();
+  }
+  function closePop(){
+    if(pop.hidden){return;}
+    pop.classList.remove('show');
+    later(function(){pop.hidden=true;},350);
+    say('Janamdin mubarak, Mehak.');
+    again.hidden=false;
+    again.focus({preventScroll:true});
+  }
+  closeBtn.addEventListener('click',closePop);
+  pop.addEventListener('click',function(e){if(e.target===pop){closePop();}});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePop();}});
+  again.addEventListener('click',lit);
+
+  function confetti(){
+    if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){return;}
+    var c=$('confetti'),ctx=c.getContext('2d');
+    var dpr=Math.min(window.devicePixelRatio||1,2);
+    var W=c.width=Math.round(innerWidth*dpr),H=c.height=Math.round(innerHeight*dpr);
+    var colors=['#ff8fab','#ffb347','#fff0e2','#ffd166','#c77dff','#7bdff2'];
+    var ps=[],i;
+    for(i=0;i<150;i++){
+      ps.push({x:Math.random()*W,y:-Math.random()*H*.4,w:(6+Math.random()*6)*dpr,h:(10+Math.random()*8)*dpr,
+        vx:(Math.random()-.5)*3*dpr,vy:(2+Math.random()*4)*dpr,r:Math.random()*6,vr:(Math.random()-.5)*.3,c:colors[i%colors.length]});
+    }
+    var t0=performance.now();
+    function tick(t){
+      ctx.clearRect(0,0,W,H);
+      var alive=0;
+      ps.forEach(function(p){
+        p.x+=p.vx;p.y+=p.vy;p.vy+=.04*dpr;p.r+=p.vr;
+        if(p.y<H+40){alive++;}
+        ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.fillStyle=p.c;
+        ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();
+      });
+      if(alive&&t-t0<7000){requestAnimationFrame(tick);}else{ctx.clearRect(0,0,W,H);}
+    }
+    requestAnimationFrame(tick);
+  }
+
+  lit();
+})();
+</script>
+
+</body></html>
